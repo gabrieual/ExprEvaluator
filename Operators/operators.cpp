@@ -3,47 +3,48 @@
 
 
 namespace ExpressionEvaluator {
-    // Operator Factory Method, recive the token 
-    std::unique_ptr<Operator> Operator::createOperator(const std::string& token) {
-        if (token == "+") return std::make_unique<AddOperator>();
-        if (token == "-") return std::make_unique<SubtractOperator>();
-        if (token == "*") return std::make_unique<MultiplyOperator>();
-        if (token == "/") return std::make_unique<DivideOperator>();
-        if (token == "<") return std::make_unique<LessOperator>();
-        if (token == ">") return std::make_unique<GreaterOperator>();
-        if (token == "<=") return std::make_unique<LessEqualOperator>();
-        if (token == ">=") return std::make_unique<GreaterEqualOperator>();
-        if (token == "||") return std::make_unique<OrOperator>();
-        if (token == "&&") return std::make_unique<AndOperator>();
-        if (token == "==") return std::make_unique<EqualOperator>();
-        if (token == "!=") return std::make_unique<NotEqualOperator>();
-        if (token == "-") return std::make_unique<NegateOperator>();
+    // Operator factory method, a design partter that recive the token
+    // and decide wich you be 
+    Operator* Operator::createOperator(const std::string& token) {
+        if (token == "+") return new AddOperator();
+        if (token == "-") return new SubtractOperator();
+        if (token == "*") return new MultiplyOperator();
+        if (token == "/") return new DivideOperator();
+        if (token == "<") return new LessOperator();
+        if (token == ">") return new GreaterOperator();
+        if (token == "<=") return new  LessEqualOperator();
+        if (token == ">=") return new  GreaterEqualOperator();
+        if (token == "||") return new  OrOperator();
+        if (token == "&&") return new  AndOperator();
+        if (token == "==") return new  EqualOperator();
+        if (token == "!=") return new  NotEqualOperator();
+        if (token == "-") return new NegateOperator();
         throw "Unkown operator"; // An unkown operator, throw error
     }
 
     // Arithmetic operators
-    std::unique_ptr<Expression> AddOperator::apply(
+    Expression* AddOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
-        return std::make_unique<IntLiteral>(left.evaluateInt() + right.evaluateInt());
+        return new IntLiteral (left.evaluateInt() + right.evaluateInt());
     }
 
-    std::unique_ptr<Expression> SubtractOperator::apply(
+    Expression* SubtractOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
-        return std::make_unique<IntLiteral>(left.evaluateInt() - right.evaluateInt());
+        return new IntLiteral (left.evaluateInt() - right.evaluateInt());
     }
 
-    std::unique_ptr<Expression> MultiplyOperator::apply(
+    Expression* MultiplyOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
-        return std::make_unique<IntLiteral>(left.evaluateInt() * right.evaluateInt());
+        return new IntLiteral (left.evaluateInt() * right.evaluateInt());
     }
 
-    std::unique_ptr<Expression> DivideOperator::apply(
+    Expression* DivideOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
@@ -51,79 +52,79 @@ namespace ExpressionEvaluator {
         if (divisor == 0) { // Division by zero
             throw "Division by zero";
         }
-        return std::make_unique<IntLiteral>(left.evaluateInt() / divisor);
+        return new IntLiteral (left.evaluateInt() / divisor);
     }
 
     // Comparison operators
-    std::unique_ptr<Expression> LessOperator::apply(
+    Expression* LessOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
-        return std::make_unique<BoolLiteral>(left.evaluateInt() < right.evaluateInt());
+        return new BoolLiteral (left.evaluateInt() < right.evaluateInt());
     }
 
-    std::unique_ptr<Expression> GreaterOperator::apply(
+    Expression* GreaterOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
-        return std::make_unique<BoolLiteral>(left.evaluateInt() > right.evaluateInt());
+        return new BoolLiteral (left.evaluateInt() > right.evaluateInt());
     }
 
-    std::unique_ptr<Expression> LessEqualOperator::apply(
+    Expression* LessEqualOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
-        return std::make_unique<BoolLiteral>(left.evaluateInt() <= right.evaluateInt());
+        return new BoolLiteral (left.evaluateInt() <= right.evaluateInt());
     }
 
-    std::unique_ptr<Expression> GreaterEqualOperator::apply(
+    Expression* GreaterEqualOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
-        return std::make_unique<BoolLiteral>(left.evaluateInt() >= right.evaluateInt());
+        return new BoolLiteral (left.evaluateInt() >= right.evaluateInt());
     }
 
     // Logical operators
-    std::unique_ptr<Expression> OrOperator::apply(
+    Expression* OrOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
-        return std::make_unique<BoolLiteral>(left.evaluateBool() || right.evaluateBool());
+        return new BoolLiteral (left.evaluateBool() || right.evaluateBool());
     }
 
-    std::unique_ptr<Expression> AndOperator::apply(
+    Expression* AndOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
-        return std::make_unique<BoolLiteral>(left.evaluateBool() && right.evaluateBool());
+        return new BoolLiteral (left.evaluateBool() && right.evaluateBool());
     }
 
-    std::unique_ptr<Expression> EqualOperator::apply(
+    Expression* EqualOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
         // For boolean expressions
         if (left.isBoolean() && right.isBoolean()) {
-            return std::make_unique<BoolLiteral>(left.evaluateBool() == right.evaluateBool());
+            return new BoolLiteral (left.evaluateBool() == right.evaluateBool());
         }
         // For integer expressions
-        return std::make_unique<BoolLiteral>(left.evaluateInt() == right.evaluateInt());
+        return new BoolLiteral (left.evaluateInt() == right.evaluateInt());
     }
 
-    std::unique_ptr<Expression> NotEqualOperator::apply(
+    Expression* NotEqualOperator::apply(
         const Expression& left, 
         const Expression& right
     ) const {
         // For boolean expressions
         if (left.isBoolean() && right.isBoolean()) {
-            return std::make_unique<BoolLiteral>(left.evaluateBool() != right.evaluateBool());
+            return new BoolLiteral (left.evaluateBool() != right.evaluateBool());
         }
         // For integer expressions
-        return std::make_unique<BoolLiteral>(left.evaluateInt() != right.evaluateInt());
+        return new BoolLiteral (left.evaluateInt() != right.evaluateInt());
     }
 
     // Unary operator
-    std::unique_ptr<Expression> NegateOperator::apply(const Expression& expr) const {
-        return std::make_unique<IntLiteral>(-expr.evaluateInt());
+    Expression* NegateOperator::apply(const Expression& expr) const {
+        return new IntLiteral (-expr.evaluateInt());
     }
 }
