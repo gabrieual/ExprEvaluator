@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 #include <string>
 #include "Parser/parser.h"
 #include "Expression/expression.h"
@@ -14,9 +13,10 @@ int main() {
         std::getline(std::cin, line);
 
         try {
+            ExpressionEvaluator::Expression* expression = nullptr; // nullptr because don't have a constructor
             // Parse the expression
             ExpressionEvaluator::Parser parser(line);
-            auto expression = parser.parse();
+            expression = parser.parse();
 
             // Evaluate and print the result
             if (expression->isBoolean()) {
@@ -24,8 +24,11 @@ int main() {
             } else {
                 std::cout << expression->evaluateInt() << std::endl;
             }
-        } catch (const std::exception& e) {
-            std::cout << "error" << std::endl;
+            
+            delete expression;
+
+        } catch (const char* error) {
+            std::cout << "error: " << error << std::endl;
         }
     }
 
