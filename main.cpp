@@ -13,7 +13,8 @@ int main() {
         std::getline(std::cin, line);
 
         try {
-            ExpressionEvaluator::Expression* expression = nullptr; // nullptr because don't have a constructor
+            ExpressionEvaluator::Expression* expression = nullptr;
+            
             // Parse the expression
             ExpressionEvaluator::Parser parser(line);
             expression = parser.parse();
@@ -28,7 +29,7 @@ int main() {
             delete expression;
 
         } catch (const char* error) {
-            std::cout << "error: " << error << std::endl;
+            std::cout << "error" << std::endl;
         }
     }
 

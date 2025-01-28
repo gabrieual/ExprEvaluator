@@ -13,13 +13,13 @@ namespace ExpressionEvaluator {
         static Operator* createOperator(const std::string& token);
     };
 
-    class UnaryOperator : public Operator {
+    class UnaryOperator : public Operator { // Base class for unary operators
     public:
         bool isBinary() const override { return false; }
         virtual Expression* apply(const Expression& expr) const = 0;
     };
 
-    class BinaryOperator : public Operator {
+    class BinaryOperator : public Operator { // Base class for binary operators
     public:
         bool isBinary() const override { return true; }
         virtual Expression* apply(

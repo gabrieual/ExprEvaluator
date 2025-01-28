@@ -11,7 +11,7 @@ namespace ExpressionEvaluator {
         std::vector<std::string> tokens;
         int current;
 
-        bool isEnd() const;
+        inline bool isEnd() const { return current >= tokens.size(); }
         std::string peek() const;
         std::string consume();
 

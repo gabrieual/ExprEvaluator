@@ -20,10 +20,6 @@ namespace ExpressionEvaluator {
 
     Parser::~Parser(){}
 
-    bool Parser::isEnd() const {
-        return current >= tokens.size();
-    }
-
     std::string Parser::peek() const {
         if (isEnd()) {
             throw "Unexpected end of input";
