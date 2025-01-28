@@ -169,12 +169,12 @@ namespace ExpressionEvaluator {
     Expression* Parser::parseUnaryExpression() {
         if (!isEnd() && peek() == "-") {
             consume(); // consume "-"
-            Expression* expr = parsePrimaryExpression();
-            Expression* negatedExpr = new BinaryExpression(
-                new IntLiteral(0),  // Left operand is 0
+            Expression* expr = parseUnaryExpression(); // recursive call to handle nested "-"
+            Expression* negatedExpr = new BinaryExpression( // expression will be (0 + -expression)
+                new IntLiteral(0), 
                 dynamic_cast<BinaryOperator*>(Operator::createOperator("+")),  // Convert to addition
                 new BinaryExpression(
-                    new IntLiteral(0), 
+                    new IntLiteral(0),
                     dynamic_cast<BinaryOperator*>(Operator::createOperator("-")),
                     expr
                 )
