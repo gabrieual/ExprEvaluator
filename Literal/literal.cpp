@@ -1,4 +1,5 @@
 #include "literal.h"
+#include <stdexcept>
 
 namespace ExpressionEvaluator {
     // Integer literals

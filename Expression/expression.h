@@ -1,7 +1,7 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
-#include <stdexcept>
+#include <string>
 
 namespace ExpressionEvaluator {
     class Expression { // Abstract base class for all expressions

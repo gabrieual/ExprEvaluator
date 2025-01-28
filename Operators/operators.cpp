@@ -1,10 +1,8 @@
 #include "operators.h"
 #include "../Literal/literal.h"
 
-
 namespace ExpressionEvaluator {
-    // Operator factory method, a design partter that recive the token
-    // and decide wich you be 
+    // Factory method that returns a pointer to a operator based on the token
     Operator* Operator::createOperator(const std::string& token) {
         if (token == "+") return new AddOperator();
         if (token == "-") return new SubtractOperator();

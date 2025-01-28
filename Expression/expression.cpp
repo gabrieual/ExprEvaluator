@@ -3,7 +3,6 @@
 
 namespace ExpressionEvaluator
 {
-    // Static factory method to create expressions from tokens
     Expression*
     Expression::createExpression(const std::string &token){
         try{ // First try to create an bool literal
