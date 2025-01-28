@@ -169,12 +169,17 @@ namespace ExpressionEvaluator {
     Expression* Parser::parseUnaryExpression() {
         if (!isEnd() && peek() == "-") {
             consume(); // consume "-"
-            Operator* op = Operator::createOperator("-");
             Expression* expr = parsePrimaryExpression();
-            return new UnaryExpression(
-                dynamic_cast<UnaryOperator*>(op), 
-                expr
+            Expression* negatedExpr = new BinaryExpression(
+                new IntLiteral(0),  // Left operand is 0
+                dynamic_cast<BinaryOperator*>(Operator::createOperator("+")),  // Convert to addition
+                new BinaryExpression(
+                    new IntLiteral(0), 
+                    dynamic_cast<BinaryOperator*>(Operator::createOperator("-")),
+                    expr
+                )
             );
+            return negatedExpr;
         }
         return parsePrimaryExpression();
     }
@@ -183,7 +188,7 @@ namespace ExpressionEvaluator {
         if (!isEnd() && peek() == "(") {
             consume(); // consume "("
             Expression* expr = parseExpression();
-            if (isEnd() || consume() != ")") { // Expected closing parenthesis
+            if (isEnd() || consume() != ")") { // closing parenthesis missing
                 throw "Expected closing parenthesis";
             }
             return expr;

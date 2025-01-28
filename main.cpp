@@ -4,7 +4,7 @@
 #include "Expression/expression.h"
 
 int main() {
-    int cases;
+    unsigned int cases;
     std::cin >> cases;
     std::cin.ignore();
 

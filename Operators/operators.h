@@ -174,13 +174,14 @@ namespace ExpressionEvaluator {
             return new NotEqualOperator(*this);
         }
     };
-
+    
+    // Unary negative operator
     class NegateOperator : public UnaryOperator {
     public:
         Expression* apply(const Expression& expr) const override;
     
 
-    Operator* clone() const override {
+        Operator* clone() const override {
             return new NegateOperator(*this);
         }
     };

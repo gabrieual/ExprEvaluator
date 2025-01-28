@@ -125,6 +125,9 @@ namespace ExpressionEvaluator {
 
     // Unary operator
     Expression* NegateOperator::apply(const Expression& expr) const {
-        return new IntLiteral (-expr.evaluateInt());
+        if (expr.isBoolean()) {
+            throw "Cannot negate a boolean expression";
+        }
+        return new IntLiteral(-expr.evaluateInt());
     }
 }

@@ -1,6 +1,5 @@
 #include "expression.h"
 #include "../Literal/literal.h"
-#include <stdexcept>
 
 namespace ExpressionEvaluator
 {

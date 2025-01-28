@@ -3,8 +3,7 @@
 namespace ExpressionEvaluator {
     UnaryExpression::UnaryExpression(
         UnaryOperator* oper, 
-        Expression* expression
-    ) : 
+        Expression* expression) : 
         expr(expression), 
         op(oper) 
     {}
@@ -14,7 +13,10 @@ namespace ExpressionEvaluator {
         op(dynamic_cast<UnaryOperator*>(copied.op->clone()))
     {}
 
-    UnaryExpression::~UnaryExpression() {};
+    UnaryExpression::~UnaryExpression() {
+        delete expr;
+        delete op;
+    }
 
     bool UnaryExpression::isBoolean() const {
         return expr->isBoolean();
