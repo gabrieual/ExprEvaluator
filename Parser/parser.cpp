@@ -55,7 +55,7 @@ namespace ExpressionEvaluator {
     Expression* Parser::parseOrExpression() {
         Expression* expr = parseAndExpression();
         
-        while (!isEnd() && peek() == "||") {
+        if (!isEnd() && peek() == "||") {
             consume(); // consume "||"
             Operator* op = Operator::createOperator("||");
             Expression* right = parseAndExpression();
@@ -74,10 +74,10 @@ namespace ExpressionEvaluator {
     Expression* Parser::parseAndExpression() {
         Expression* expr = parseEqualityExpression();
         
-        while (!isEnd() && peek() == "&&") {
+        if (!isEnd() && peek() == "&&") {
             consume(); // consume "&&"
             Operator* op = Operator::createOperator("&&");
-            Expression* right = parseAndExpression();
+            Expression* right = parseEqualityExpression();
             Expression* newExpr = new BinaryExpression(
                 expr, 
                 dynamic_cast<BinaryOperator*>(op), 
@@ -93,11 +93,11 @@ namespace ExpressionEvaluator {
     Expression* Parser::parseEqualityExpression() {
         Expression* expr = parseRelationalExpression();
         
-        while (!isEnd() && (peek() == "==" || peek() == "!=")) {
+        if (!isEnd() && (peek() == "==" || peek() == "!=")) {
             std::string opToken = consume();
             Operator* op = Operator::createOperator(opToken);
             Expression* right = parseRelationalExpression();
-            Expression* newExpr = new BinaryExpression (
+            Expression* newExpr = new BinaryExpression(
                 expr, 
                 dynamic_cast<BinaryOperator*>(op), 
                 right
@@ -112,11 +112,11 @@ namespace ExpressionEvaluator {
     Expression* Parser::parseRelationalExpression() {
         Expression* expr = parseAdditiveExpression();
         
-        while (!isEnd() && (peek() == "<" || peek() == ">" || peek() == "<=" || peek() == ">=")) {
+        if (!isEnd() && (peek() == "<" || peek() == ">" || peek() == "<=" || peek() == ">=")) {
             std::string opToken = consume();
             Operator* op = Operator::createOperator(opToken);
             Expression* right = parseAdditiveExpression();
-            Expression* newExpr = new BinaryExpression (
+            Expression* newExpr = new BinaryExpression(
                 expr, 
                 dynamic_cast<BinaryOperator*>(op), 
                 right
@@ -131,11 +131,11 @@ namespace ExpressionEvaluator {
     Expression* Parser::parseAdditiveExpression() {
         Expression* expr = parseMultiplicativeExpression();
         
-        while (!isEnd() && (peek() == "+" || peek() == "-")) {
+        if (!isEnd() && (peek() == "+" || peek() == "-")) {
             std::string opToken = consume();
             Operator* op = Operator::createOperator(opToken);
             Expression* right = parseMultiplicativeExpression();
-            Expression* newExpr = new BinaryExpression (
+            Expression* newExpr = new BinaryExpression(
                 expr, 
                 dynamic_cast<BinaryOperator*>(op), 
                 right
@@ -150,19 +150,19 @@ namespace ExpressionEvaluator {
     Expression* Parser::parseMultiplicativeExpression() {
         Expression* expr = parseUnaryExpression();
         
-        while (!isEnd() && (peek() == "*" || peek() == "/")) {
+        if (!isEnd() && (peek() == "*" || peek() == "/")) {
             std::string opToken = consume();
             Operator* op = Operator::createOperator(opToken);
             Expression* right = parseUnaryExpression();
-            Expression* newExpr = new BinaryExpression (
+            Expression* newExpr = new BinaryExpression(
                 expr, 
                 dynamic_cast<BinaryOperator*>(op), 
                 right
             );
 
             expr = newExpr;
+
         }
-        
         return expr;
     }
 
@@ -201,7 +201,7 @@ namespace ExpressionEvaluator {
             } catch (const char*) {
                 try {
                     return new BoolLiteral(token);
-                } catch (const std::runtime_error&) { // Unexpected token, throw error
+                } catch (const char*) { // Unexpected token, throw error
                     throw "Unexpected token";
                 }
             }
