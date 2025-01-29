@@ -5,7 +5,7 @@ O programa é um avaliador de expressões, lê expressões (aritméticas e boole
 
 O formato de cada expressão segue a especificação dada pela **Gramática Livre de Contexto (GLC)**. 
 
-Cada token deve estar separado por um espaço **" "** como `( 10 + 3 ( 2 * - 2 ) )` ou `( false || false) == true` por exemplo.
+Cada token deve estar separado por pelo menos um espaço **" "** como `( 10 + 3 ( 2 * - 2 ) )` ou `( false || false ) == true` por exemplo.
 
 ## Compilando 🛠️
 No diretório onde está o `makefile` execute:
@@ -21,7 +21,7 @@ g++ -std=c++17 ./main.cpp ./Expression/expression.cpp ./Expression/binary_expres
 ## Executando
 O executável será gerado com o nome `expreval`, execute:
 ```bash
-./expreeval
+./expreval
 ```
 
 ## Limpando

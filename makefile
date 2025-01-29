@@ -18,6 +18,6 @@ $(EXEC): $(OBJECTS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-
+    
 clean:
-	rm $(OBJECTS) $(EXEC)
+	rm -f $(OBJECTS) $(EXEC)
