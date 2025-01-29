@@ -23,7 +23,7 @@ namespace ExpressionEvaluator {
     }
 
     bool BinaryExpression::isBoolean() const {
-        // Determine if the result is a boolean based on the operator
+        // Determine if is a boolean based on the operator
         return op->apply(*left, *right)->isBoolean();
     }
 
